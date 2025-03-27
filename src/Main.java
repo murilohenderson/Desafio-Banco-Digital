@@ -18,17 +18,20 @@ public class Main {
             System.out.println("3 - Sacar");
             System.out.println("4 - Transferir");
             System.out.println("5 - Imprimir extrato");
-            System.out.println("6 - Sair");
+            System.out.println("6 - Lista de contas");
+            System.out.println("7 - Sair");
             System.out.println("Escolha uma opção");
             opcao = scanner.nextInt();
             scanner.nextLine();
 
             switch (opcao) {
-                case 1 -> {
-                        criarClienteEConta(scanner, clientes, contas);
-                    break;
-                }
-                case 6 -> {
+                case 1 -> criarClienteEConta(scanner, clientes, contas);
+                case 2 -> realizarDeposito(scanner, contas);
+                case 3 -> realizarSaque(scanner, contas);
+                case 4 -> realizarTransferencia(scanner, contas);
+                case 5 -> imprimirExtrato(scanner, contas);
+                case 6 -> listarContas(contas);
+                case 7 -> {
                     System.out.println("Saindo...");
                     scanner.close();
                     return;
@@ -37,25 +40,7 @@ public class Main {
                     System.out.println("Opção inválida");
                 }
             }
-        } while (opcao <= 0);
-
-
-
-
-
-
-
-        /*
-        Cliente murilo = new Cliente();
-
-        Conta contaCorrente = new ContaCorrente(murilo);
-        Conta contaPoupanca = new ContaPoupanca(murilo);
-        murilo.setNome("Murilo");
-        contaCorrente.depositar(10000);
-        contaCorrente.transferir(3400, contaPoupanca);
-        contaPoupanca.imprimirExtrato();
-        contaCorrente.imprimirExtrato();
-       */
+        } while (opcao != 0 && opcao != 7);
     }
 
     private static void criarClienteEConta(Scanner scanner, List<Cliente> clientes, List<Conta> contas) {
@@ -136,7 +121,7 @@ public class Main {
         } else {
             System.out.println("===== Lista de Contas =====");
             for (Conta conta : contas) {
-                System.out.println("Agência: " + conta.getAgencia() + " | Número: " + conta.getNumero() + " | Titular: " + conta.getCliente() + " | Saldo: R$" + conta.getSaldo());
+                System.out.println("Agência: " + conta.getAgencia() + " | Número: " + conta.getNumero() + " | Titular: " + conta.getCliente().getNome() + " | Saldo: R$" + conta.getSaldo());
             }
         }
     }

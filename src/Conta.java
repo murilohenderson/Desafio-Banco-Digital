@@ -17,9 +17,9 @@ public abstract class Conta implements IConta {
 
     @Override
     public void sacar(double valor) {
-        if (valor <= this.saldo) {
+        if (valor > this.saldo) {
             System.out.println("Saldo insuficiente para saque");
-        } else if (valor < 0) {
+        } else if (valor <= 0) {
             System.out.println("Valor inválido para saque");
         } else {
             this.saldo -= valor;
@@ -28,6 +28,9 @@ public abstract class Conta implements IConta {
     }
     @Override
     public void depositar(double valor) {
+        if (valor <= 0) {
+            System.out.println("Valor inválido para depósito");
+        }
         this.saldo += valor;
         System.out.println("Deposito realizado com sucesso");
     }
@@ -35,9 +38,16 @@ public abstract class Conta implements IConta {
     public void transferir(double valor, Conta contaDestino) {
         if (contaDestino == null || contaDestino.getNumero() <= 0) {
             System.out.println("Conta destino inválida");
-        } else {
+        }
+        if (valor > this.saldo) {
+            System.out.println("Saldo insuficiente para transferência");
+        }
+        if (valor <= 0) {
+            System.out.println("Valor inválido para transferência");
+        }
         this.sacar(valor);
         contaDestino.depositar(valor);
+        System.out.println("Transferência realizada com sucesso");
         }
 
 
@@ -64,4 +74,3 @@ public abstract class Conta implements IConta {
         System.out.println(String.format("Numero: %d", this.numero));
         System.out.println(String.format("Saldo: %.2f", this.saldo));
     }
-}
