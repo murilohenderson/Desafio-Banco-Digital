@@ -83,4 +83,79 @@ public class Main {
         contas.add(conta);
         System.out.println("Conta criada com sucesso");
     }
+    private static void realizarDeposito(Scanner scanner, List<Conta> contas) {
+        Conta conta = buscarContaPorNumero(scanner, contas);
+        if (conta == null) {
+            System.out.println("Conta não encontrada");
+        } else {
+            System.out.println("Digite o valor a depositar:");
+            double valor = scanner.nextDouble();
+            conta.depositar(valor);
+        }
     }
+    private static void realizarSaque(Scanner scanner, List<Conta> contas) {
+        Conta conta = buscarContaPorNumero(scanner, contas);
+        if (conta == null) {
+            System.out.println("Conta não encontrada");
+        } else {
+            System.out.println("Digite o valor a sacar");
+            double valor = scanner.nextDouble();
+            conta.sacar(valor);
+        }
+    }
+    private static void realizarTransferencia(Scanner scanner, List<Conta> contas) {
+        System.out.println("Digite o número da conta de origem: ");
+        int numeroOrigem = scanner.nextInt();
+        Conta contaOrigem = buscarContaPorNumero(numeroOrigem, contas);
+
+        System.out.println("Digite o número da conta de destino: ");
+        int numeroDestino = scanner.nextInt();
+        Conta contaDestino = buscarContaPorNumero(numeroDestino, contas);
+
+        if (contaOrigem == null || contaDestino == null) {
+            System.out.println("Conta origem ou destino não encontrada");
+        } else {
+            System.out.println("Digite o valor a transferir: ");
+            double valor = scanner.nextDouble();
+            contaOrigem.transferir(valor, contaDestino);
+            System.out.println("Transferência realizada com sucesso");
+        }
+    }
+
+    private static void imprimirExtrato(Scanner scanner, List<Conta> contas) {
+        Conta conta = buscarContaPorNumero(scanner, contas);
+        if (conta == null) {
+            System.out.println("Conta não encontrada");
+        } else {
+            conta.imprimirExtrato();
+        }
+    }
+    private static void listarContas(List<Conta> contas) {
+        if (contas.isEmpty()) {
+            System.out.println("Nenhuma conta cadastrada");
+        } else {
+            System.out.println("===== Lista de Contas =====");
+            for (Conta conta : contas) {
+                System.out.println("Agência: " + conta.getAgencia() + " | Número: " + conta.getNumero() + " | Titular: " + conta.getCliente() + " | Saldo: R$" + conta.getSaldo());
+            }
+        }
+    }
+    private static Conta buscarContaPorNumero(Scanner scanner, List<Conta> contas) {
+        System.out.println("Digite o número da conta: ");
+        int numero = scanner.nextInt();
+        for (Conta conta : contas) {
+            if (conta.getNumero() == numero) {
+                return conta;
+            }
+        }
+        return null;
+    }
+    private static Conta buscarContaPorNumero(int numero, List<Conta> contas) {
+        for (Conta conta : contas) {
+            if (conta.getNumero() == numero) {
+                return conta;
+            }
+        }
+        return null;
+    }
+}

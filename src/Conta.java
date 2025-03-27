@@ -22,13 +22,14 @@ public abstract class Conta implements IConta {
         } else if (valor < 0) {
             System.out.println("Valor inválido para saque");
         } else {
+            this.saldo -= valor;
             System.out.println("Saque de " + valor + " realizado com sucesso.");
         }
-        this.saldo -= valor;
     }
     @Override
     public void depositar(double valor) {
         this.saldo += valor;
+        System.out.println("Deposito realizado com sucesso");
     }
     @Override
     public void transferir(double valor, Conta contaDestino) {
